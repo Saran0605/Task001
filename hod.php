@@ -282,6 +282,10 @@ $fac_id = $_SESSION['faculty_id'];
         .breadcrumb-item a:hover {
             color: #224abe;
         }
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -373,11 +377,18 @@ $fac_id = $_SESSION['faculty_id'];
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+        <form>
+        <label for="department">Select Department:</label>
+        <select id="department" name="department">
+        <option value="" disabled selected>Choose Department</option>
+
+        </select>
+        </form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Add</button>
       </div>
     </div>
   </div>
@@ -389,110 +400,8 @@ $fac_id = $_SESSION['faculty_id'];
         <!-- Footer -->
         <?php include 'footer.php'; ?>
     </div>
+    <script src="script.js" > </script>
     <script>
-        const loaderContainer = document.getElementById('loaderContainer');
-
-        function showLoader() {
-            loaderContainer.classList.add('show');
-        }
-
-        function hideLoader() {
-            loaderContainer.classList.remove('show');
-        }
-
-        //    automatic loader
-        document.addEventListener('DOMContentLoaded', function() {
-            const loaderContainer = document.getElementById('loaderContainer');
-            const contentWrapper = document.getElementById('contentWrapper');
-            let loadingTimeout;
-
-            function hideLoader() {
-                loaderContainer.classList.add('hide');
-                contentWrapper.classList.add('show');
-            }
-
-            function showError() {
-                console.error('Page load took too long or encountered an error');
-                // You can add custom error handling here
-            }
-
-            // Set a maximum loading time (10 seconds)
-            loadingTimeout = setTimeout(showError, 10000);
-
-            // Hide loader when everything is loaded
-            window.onload = function() {
-                clearTimeout(loadingTimeout);
-
-                // Add a small delay to ensure smooth transition
-                setTimeout(hideLoader, 500);
-            };
-
-            // Error handling
-            window.onerror = function(msg, url, lineNo, columnNo, error) {
-                clearTimeout(loadingTimeout);
-                showError();
-                return false;
-            };
-        });
-
-        // Toggle Sidebar
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const body = document.body;
-        const mobileOverlay = document.getElementById('mobileOverlay');
-
-        function toggleSidebar() {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.toggle('mobile-show');
-                mobileOverlay.classList.toggle('show');
-                body.classList.toggle('sidebar-open');
-            } else {
-                sidebar.classList.toggle('collapsed');
-            }
-        }
-        hamburger.addEventListener('click', toggleSidebar);
-        mobileOverlay.addEventListener('click', toggleSidebar);
-        // Toggle User Menu
-        const userMenu = document.getElementById('userMenu');
-        const dropdownMenu = userMenu.querySelector('.dropdown-menu');
-
-        userMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', () => {
-            dropdownMenu.classList.remove('show');
-        });
-
-        // Toggle Submenu
-        const menuItems = document.querySelectorAll('.has-submenu');
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const submenu = item.nextElementSibling;
-                item.classList.toggle('active');
-                submenu.classList.toggle('active');
-            });
-        });
-
-        // Handle responsive behavior
-        window.addEventListener('resize', () => {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('collapsed');
-                sidebar.classList.remove('mobile-show');
-                mobileOverlay.classList.remove('show');
-                body.classList.remove('sidebar-open');
-            } else {
-                sidebar.style.transform = '';
-                mobileOverlay.classList.remove('show');
-                body.classList.remove('sidebar-open');
-            }
-        });
-
-
-
-
         $('#journal_table').DataTable({
                 "autoWidth": false,
                 ajax: {
