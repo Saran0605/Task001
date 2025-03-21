@@ -402,73 +402,7 @@ $fac_id = $_SESSION['faculty_id'];
     </div>
     <script src="script.js" > </script>
     <script>
-        $('#journal_table').DataTable({
-                "autoWidth": false,
-                ajax: {
-                    url: 'fetch_user.php', // Your PHP endpoint for fetching data
-                    type: 'POST',
-                    data: function(d) {
-                        d.status_no = 0;
-                        d.tab = 'journal'; // Filter by status_no if necessary
-                    }
-                },
-                language: {
-                    emptyTable: "No data found",
-                    loadingRecords: "Loading data...",
-                    zeroRecords: "No matching data found"
-                },
-                columns: [{
-                        data: null,
-                        title: 'S.No',
-                        render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                    },
-					{
-                        data: 'staff_id',
-                        title: 'Staff Id'
-                    },
-					{
-                        data: 'staff_name',
-                        title: 'Staff Name'
-                    },
-                    {
-                        data: 'j_paper_title',
-                        title: 'Paper Title'
-                    },
-                    
-                    {
-                        data: null,
-                        title: 'Details',
-                        render: function(data, type, row) {
-                            return `<button class="btn btn-sm btn-info view-journal-details" data-id="${row.id}">View</button>`;
-                        }
-                    },
-                    {
-                        data: 'journal_pdf',
-                        title: 'Document',
-                        render: function(data, type, row) {
-                            return `<button type='button' class='btn btn-sm btn-info view_journal_paper' data-journal_paper_id="${data}">View</button>`;
-                        }
-                    },
-                    {
-                        data: null,
-                        title: 'Action',
-                        render: function(data, type, row) {
-                            return `
-                            <div class="d-flex">
-                                <button class="btn btn-correct btn-icon mr-2 journalapproveBtn" aria-label="Correct" data-id="${row.id}">
-                                                                                <i class="fas fa-check"></i>
-                                                                            </button>&nbsp;
-                                                                            <button class="btn btn-wrong btn-icon journalrejectBtn" aria-label="Wrong" data-id="${row.id}">
-                                                                                <i class="fas fa-times"></i>
-                                                                            </button>
-                            </div>
-                        `;
-                        }
-                    }
-                ]
-            });
+        
 
 
             $(document).on('click', '.journalapproveBtn, .journalrejectBtn', function() {
