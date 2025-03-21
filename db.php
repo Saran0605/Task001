@@ -8,7 +8,9 @@ $conn = new mysqli($var1,$var2,$var3,$var4);
 if($conn->connect_error){
     die("conncetion failed");
 }
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+    
 
 ?>
