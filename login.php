@@ -343,7 +343,7 @@
                                     <input type="hidden" id="custId" name="type" value="faculty">
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                        <input type="text" class="form-control" name="email" placeholder="Faculty ID">
+                                        <input type="text" class="form-control" name="id" placeholder="Faculty ID">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
