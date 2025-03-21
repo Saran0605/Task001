@@ -1,5 +1,8 @@
 <?php
 include("db.php");
+$fac_id = $_SESSION['faculty_id'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -312,8 +315,8 @@ include("db.php");
                 <ul class="nav nav-tabs" role="tablist"> <!-- Center the main tabs -->
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" data-bs-toggle="tab" id="edit-bus-tab" href="#publication" role="tab" aria-selected="true">
-                            <span class="hidden-xs-down" style="font-size: 0.9em;"><i class="fas fa-book tab-icon"></i> Publication</span>
-                        </a>
+                            <span class="hidden-xs-down" style="font-size: 0.9em;"><i class="fas fa-book tab-icon"></i>Courses</span>
+                        </a> 
                     </li>                   
                 </ul>
                 <div class="tab-content">
@@ -324,7 +327,7 @@ include("db.php");
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-header mb-3 " style="text-align: right;">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fac_add">ADD</button>
+                                        <button type="button" class="btn btn-primary" value="">ADD</button>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -348,41 +351,7 @@ include("db.php");
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane p-20" id="conference" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                        <div class="card-header mb-3" style="text-align: right;">
-                                            <!-- <h4 class="mb-0">Conference Information</h4> -->
-                                            <button id="open_conference" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#conferenceModal">
-                                                <b>Open Conference Form</b></button>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table id="conference_table" class="table table-striped table-bordered">
-                                                    <thead class="gradient-header">
-                                                        <tr>
-                                                            <th>S.No</th>
-                                                            <th>Paper Title</th>
-                                                            <th>Conference Name</th>
-                                                            <th>Conference Details</th>
-                                                            <th>Document</th>
-                                                            <th style="width: 200px;">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    
-                                                </table>
-
-
-                                            </div>
-
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                          
                         </div>
                     </div>
                 </div>

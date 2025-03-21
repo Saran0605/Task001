@@ -2,6 +2,7 @@
 include("db.php");
 $fac_id = $_SESSION['faculty_id'];
 $role = $_SESSION['role'];
+$dept = $_SESSION['dept'];
 
 ?>
 

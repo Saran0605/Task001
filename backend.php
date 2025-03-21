@@ -11,6 +11,8 @@ if(isset($_POST['faclogin'])){
     $query_data=mysqli_fetch_assoc($query_run);
     $role = $query_data['role'];
     $_SESSION['role'] = $role;
+    $dept = $query_data['dept'];
+    $_SESSION['dept'] = $dept;
     if($query_data!= NULL){
         $res=[
             "status"=>"200",
