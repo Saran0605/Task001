@@ -9,10 +9,6 @@
 
 </html>
 
-<?php
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -432,10 +428,11 @@
                 processData:false,
                 contentType:false,
                 success:function(response){
+                    console.log(response);
                     var res = jQuery.parseJSON(response);
                     if(res.status==200){
                         alert("login success");
-                        header("Location:index.php");
+                        window.location.href = "index.php";
 
                     }
                 }

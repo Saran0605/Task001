@@ -1,15 +1,17 @@
 <?php
+
 include("db.php");
-session_start();
 
 if(isset($_POST['faclogin'])){
     $id=$_POST['id'];
     $pass=$_POST['pass'];
+    $_SESSION['faculty_id'] = $id;
     $sql="SELECT * FROM faculty WHERE faculty_id='$id' AND pass='$pass'" ;
     $query_run=mysqli_query($conn,$sql);
     $query_data=mysqli_fetch_assoc($query_run);
+    $role = $query_data['role'];
+    $_SESSION['role'] = $role;
     if($query_data!= NULL){
-        $_SESSION['faculty_id'] = $id;
         $res=[
             "status"=>"200",
             "message"=>"success",
