@@ -279,6 +279,10 @@ include("db.php");
         .breadcrumb-item a:hover {
             color: #224abe;
         }
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -404,11 +408,18 @@ include("db.php");
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+        <form>
+        <label for="department">Select Department:</label>
+        <select id="department" name="department">
+        <option value="" disabled selected>Choose Department</option>
+
+        </select>
+        </form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Add</button>
       </div>
     </div>
   </div>
