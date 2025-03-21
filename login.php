@@ -10,11 +10,10 @@
 </html>
 
 <?php
-include("config.php");
-session_start();
+
 
 ?>
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -340,7 +339,7 @@ session_start();
                             </div>
 
                             <div class="tab-pane fade" id="faculty">
-                                <form action="#" method="post">
+                                <form id="facform">
                                     <input type="hidden" id="custId" name="type" value="faculty">
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -419,6 +418,28 @@ session_start();
                 }
             }
         });
+
+
+        $(document).on("submit","#facform",function(e){
+            e.preventDefault();
+            var form = new FormData(this);
+            form.append("faclogin",true);
+            $.ajax({
+                type:"POST",
+                url:"backend.php",
+                data:form,
+                processData:false,
+                contentType:false,
+                success:function(response){
+                    var res = jQuery.parseJSON(response);
+                    if(res.status==200){
+                        alert("login success");
+                        header("Location:index.php");
+
+                    }
+                }
+            })
+        })
     </script>
 </body>
 
