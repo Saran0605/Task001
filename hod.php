@@ -378,7 +378,7 @@ $fac_id = $_SESSION['faculty_id'];
       </div>
       <div class="modal-body">
         <form>
-        <label for="year">Select Department:</label>
+        <label for="year">Select Academic Year:</label>
         <select id="year" name="year">
         <option value="" disabled selected>Choose Department</option>
 
@@ -548,8 +548,8 @@ $fac_id = $_SESSION['faculty_id'];
                         console.log(res);
                         let select = $("#year");
                         if(res.status==200){
-                            $.each(res,function(index,res){
-                                select.append(`<option value="${res.id}">${res.year}</option>`);
+                            $.each(res.data,function(index,item){
+                                select.append(`<option value="${item.id}">${item.year}</option>`);
                             });
                             $("#fac_add").modal("show");
                         }   

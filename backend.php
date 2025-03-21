@@ -25,20 +25,19 @@ if(isset($_POST['faclogin'])){
 
 
 if(isset($_POST['course'])){
-    $sql="SELECT * from academic_year";
-    $query_run=mysqli_query($conn,$sql);
-    $query_data=mysqli_fetch_assoc($query_run);
-    $data=[];
-    if($row=$query_data!=NULL){
-        $data[]=$row;
+    $sql = "SELECT * FROM academic_year";
+    $query_run = mysqli_query($conn,$sql);
+    $query_data = mysqli_fetch_all($query_run,MYSQLI_ASSOC);
+    if($query_data){
         $res=[
-            "status"=>"200",
-            "message"=>"Fetched",
-            "data"=>$data
+            "status"=>200,
+            "message"=>"success",
+            "data"=>$query_data,
         ];
         echo json_encode($res);
 
     }
+
 }
 
 
