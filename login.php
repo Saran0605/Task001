@@ -424,6 +424,7 @@
             e.preventDefault();
             var form = new FormData(this);
             form.append("faclogin",true);
+            console.log(form);
             $.ajax({
                 type:"POST",
                 url:"backend.php",

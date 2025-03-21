@@ -1,3 +1,15 @@
+
+<?php
+session_start();
+$fac_id = $_SESSION['faculty_id'];
+$sql = "SELECT * FROM faculty WHERE faculty_id='$fac_id'";
+$query_run = mysqli_query($conn,$sql);
+$query_data = mysqli_fetch_array($query_run);
+$role = $query_data['role'];
+$_SESSION['role'] = $role;
+
+
+?>
 <style>
     /* Sidebar Styles */
     .sidebar {
@@ -222,6 +234,17 @@ display: inline-block;
             <i class="fas fa-bus icon-bus"></i>
             <span>Bus Booking</span>
         </a>
+        <?php
+        if($role == "hod"){
+        ?>
+        <a href="hod.php.php" class="menu-item">
+            <i class="fas fa-comments icon-feedback"></i>
+            <span>Academics</span>
+        </a>
+        <?php
+        }?>
+
+
         <a href="sfeedback.php" class="menu-item">
             <i class="fas fa-comments icon-feedback"></i>
             <span>Feedback Corner</span>
