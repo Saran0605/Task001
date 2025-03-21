@@ -545,7 +545,6 @@ $fac_id = $_SESSION['faculty_id'];
                     },
                     success:function(response){
                         var res = jQuery.parseJSON(response);
-                        console.log(response);
                         console.log(res);
                         let select = $("#year");
                         if(res.status==200){

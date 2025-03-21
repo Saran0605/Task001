@@ -11,7 +11,7 @@ if(isset($_POST['faclogin'])){
     $query_data=mysqli_fetch_assoc($query_run);
     $role = $query_data['role'];
     $_SESSION['role'] = $role;
-    $dept = $query_data['dept'];
+    $dept = $query_data['department'];
     $_SESSION['dept'] = $dept;
     if($query_data!= NULL){
         $res=[
@@ -26,7 +26,7 @@ if(isset($_POST['faclogin'])){
 
 if(isset($_POST['course'])){
     $sql="SELECT * from academic_year";
-    $query_run=mysqli_query($sql,$conn);
+    $query_run=mysqli_query($conn,$sql);
     $query_data=mysqli_fetch_assoc($query_run);
     $data=[];
     if($row=$query_data!=NULL){
