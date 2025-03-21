@@ -331,7 +331,7 @@ $fac_id = $_SESSION['faculty_id'];
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-header mb-3 " style="text-align: right;">
-                                        <button type="button" class="btn btn-primary" value="">ADD</button>
+                                        <button type="button" class="btn btn-primary" id="addcourse">ADD</button>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -378,8 +378,8 @@ $fac_id = $_SESSION['faculty_id'];
       </div>
       <div class="modal-body">
         <form>
-        <label for="department">Select Department:</label>
-        <select id="department" name="department">
+        <label for="year">Select Department:</label>
+        <select id="year" name="year">
         <option value="" disabled selected>Choose Department</option>
 
         </select>
@@ -533,6 +533,31 @@ $fac_id = $_SESSION['faculty_id'];
                     });
                 }
             });
+
+
+            $(document).on("click","#addcourse",function(e){
+                e.preventDefault();
+                $.ajax({
+                    type:"POST",
+                    url:"backend.php",
+                    data:{
+                        course:true,
+                    },
+                    success:function(response){
+                        var res = jQuery.parseJSON(response);
+                        console.log(response);
+                        console.log(res);
+                        let select = $("#year");
+                        if(res.status==200){
+                            $.each(res,function(index,res){
+                                select.append(`<option value="${res.id}">${res.year}</option>`);
+                            });
+                            $("#fac_add").modal("show");
+                        }   
+
+                    }
+                })
+            })
     </script>
    
 </body>
