@@ -318,27 +318,13 @@ include("db.php");
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="publication" role="tabpanel">                        
-                        <ul class="nav navs-tabs justify-content-center ">
-                            <li class="nav-item" style="margin-right: 10px;"> <!-- Add margin between tabs -->
-                                <a class="nav-link active" style="font-size: 0.9em;" id="add-bus-tab" data-bs-toggle="tab" href="#journal" role="tab" aria-selected="true">
-                                    Journal
-                                </a>
-                            </li>
-                            <li class="nav-item "> <!-- Add margin between tabs -->
-                                <a class="nav-link" id="add-bus-tab" data-bs-toggle="tab" style="font-size: 0.9em;"
-                                    href="#conference" role="tab" aria-selected="false">
-                                    Conference
-                                </a>
-                            </li>
-                        </ul>
+                        
                         <div class="tab-content">
                             <div class="tab-pane p-20 active" id="journal" role="tabpanel">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-header mb-3 " style="text-align: right;">
-                                            <button id="open_journal" class="btn btn-sm btn btn-primary" data-bs-toggle="modal" data-bs-target="#journalModal">
-                                                <b> Open Journal Form</b>
-                                            </button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fac_add">ADD</button>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -399,15 +385,38 @@ include("db.php");
                             </div>
                         </div>
                     </div>
-
-                   
-
-
-
                 </div>
             </div>
         </div>
 
+
+<!-----------------------------------------MODAL--------------------------->
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="fac_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!------------------------------- MODAL ENDS -------------------------------->
         <!-- Footer -->
         <?php include 'footer.php'; ?>
     </div>
