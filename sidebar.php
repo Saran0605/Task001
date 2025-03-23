@@ -242,6 +242,16 @@ display: inline-block;
         <?php
         }
         ?>
+        <?php
+        if($role=="faculty"){
+        ?>
+         <a href="faculty.php" class="menu-item">
+            <i class="fas fa-bus icon-bus"></i>
+            <span>Class</span>
+        </a>
+        <?php
+        }
+        ?>
         
 
 
