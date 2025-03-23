@@ -1,6 +1,7 @@
 <?php
 include("db.php");
 $fac_id = $_SESSION['faculty_id'];
+$dept = $_SESSION['dept'];
 
 
 ?>
@@ -11,6 +12,17 @@ $fac_id = $_SESSION['faculty_id'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIC</title>
+    <!-- Styles -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+<!-- Or for RTL support -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script> 
     <link rel="icon" type="image/png" sizes="32x32" href="image/icons/mkce_s.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -331,7 +343,7 @@ $fac_id = $_SESSION['faculty_id'];
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-header mb-3 " style="text-align: right;">
-                                        <button type="button" class="btn btn-primary" id="addcourse">ADD</button>
+                                        <button type="button" class="btn btn-primary" value="<?php echo $dept; ?>" id="addcourse">ADD</button>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -373,16 +385,43 @@ $fac_id = $_SESSION['faculty_id'];
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Course Selection</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
         <label for="year">Select Academic Year:</label>
         <select id="year" name="year">
-        <option value="" disabled selected>Choose Department</option>
+        <option value="" disabled selected>Choose Academic Year</option>
 
         </select>
+        <br><br>
+
+        <label for="year">Select Advisor:</label>
+        <select id="advisor" name="advisor">
+        <option value="" disabled selected>Choose Advisor</option>
+
+        </select>
+        <br><br>
+
+        <label for="section">Select Section:</label>
+        <select id="section" name="section">
+        <option value="" disabled selected>Choose section</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+
+        </select>
+        
+        
+
+
+
+
+
+        
+
+        
+
         </form>
 
       </div>
@@ -536,27 +575,41 @@ $fac_id = $_SESSION['faculty_id'];
 
 
             $(document).on("click","#addcourse",function(e){
+
                 e.preventDefault();
+                $dept = $(this).val();
                 $.ajax({
                     type:"POST",
                     url:"backend.php",
                     data:{
                         course:true,
+                        dept:$dept,
                     },
                     success:function(response){
                         var res = jQuery.parseJSON(response);
                         console.log(res);
                         let select = $("#year");
+                        let selectad = $("#advisor");
                         if(res.status==200){
                             $.each(res.data,function(index,item){
                                 select.append(`<option value="${item.id}">${item.year}</option>`);
                             });
+                            $.each(res.data1,function(index,item){
+                                selectad.append(`<option value="${item.id}">${item.faculty_name}</option>`);
+                            })
                             $("#fac_add").modal("show");
                         }   
 
                     }
                 })
-            })
+            });
+
+            $( '#multiple-select-field' ).select2( {
+    theme: "bootstrap-5",
+    width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+    placeholder: $( this ).data( 'placeholder' ),
+    closeOnSelect: false,
+} );
     </script>
    
 </body>

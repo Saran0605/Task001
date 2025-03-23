@@ -25,7 +25,11 @@ if(isset($_POST['faclogin'])){
 
 
 if(isset($_POST['course'])){
+    $dept = $_POST['dept'];
     $sql = "SELECT * FROM academic_year";
+    $sql1 = "SELECT * FROM faculty WHERE department = '$dept' AND role='faculty'";
+    $query_run1 = mysqli_query($conn,$sql1);
+    $query_data1 = mysqli_fetch_all($query_run1,MYSQLI_ASSOC);
     $query_run = mysqli_query($conn,$sql);
     $query_data = mysqli_fetch_all($query_run,MYSQLI_ASSOC);
     if($query_data){
@@ -33,6 +37,7 @@ if(isset($_POST['course'])){
             "status"=>200,
             "message"=>"success",
             "data"=>$query_data,
+            "data1"=>$query_data1,
         ];
         echo json_encode($res);
 
