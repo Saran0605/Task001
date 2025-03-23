@@ -25,7 +25,7 @@ if(isset($_POST['faclogin'])){
 
 
 if(isset($_POST['course'])){
-    $dept = $_POST['dept'];
+    $dept = $_POST['dept']; 
     $sql = "SELECT * FROM academic_year";
     $sql1 = "SELECT * FROM faculty WHERE department = '$dept' AND role='faculty'";
     $query_run1 = mysqli_query($conn,$sql1);
@@ -43,6 +43,46 @@ if(isset($_POST['course'])){
 
     }
 
+}
+
+if(isset($_POST['yearc'])){
+    $year = $_POST['year'];
+    $sql = "SELECT * FROM course WHERE year = '$year'";
+    $query_run = mysqli_query($conn,$sql);
+    $data = mysqli_fetch_all($query_run,MYSQLI_ASSOC);
+    if($data){
+        $res=[
+            "status"=>200,
+            "message"=>"success",
+            "data"=>$data,
+        ];
+        echo json_encode($res);
+    }
+}
+
+if(isset($_POST['cdata'])){
+    $advisor_id = $_POST['advisor'];
+    $courses = json_decode($_POST['courses'], true);  
+    $year = $_POST['year'];
+    $section = $_POST['section'];
+    $run = false;
+    $query = "INSERT INTO advisor(faculty_id,year,section) VALUES('$advisor_id','$year','$section')";
+    $q_run = mysqli_query($conn,$query);
+
+    foreach($courses as $course){
+        $sql = "INSERT INTO advisor_courses(advisor_id,course_id,section,year) VALUES('$advisor_id','$course','$section','$year')";
+        $query_run = mysqli_query($conn,$sql);
+        $run = true;
+
+    }
+    if($run){
+        $res=[
+            "status"=>200,
+            "message"=>"done",
+        ];
+        echo json_encode($res);
+    }
+    
 }
 
 

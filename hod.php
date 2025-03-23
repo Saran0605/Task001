@@ -388,8 +388,9 @@ $dept = $_SESSION['dept'];
         <h5 class="modal-title" id="exampleModalLabel">Course Selection</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form id="add_course">
+
       <div class="modal-body">
-        <form>
         <label for="year">Select Academic Year:</label>
         <select id="year" name="year">
         <option value="" disabled selected>Choose Academic Year</option>
@@ -411,24 +412,19 @@ $dept = $_SESSION['dept'];
         <option value="B">B</option>
 
         </select>
-        
-        
+        <br><br>
+        <label>Select Courses (Choose exactly 8 courses):</label>
+        <div id="courses-list"></div>
+        <p id="error-msg" style="color:red; display:none;">You can select only 8 courses!</p>
 
-
-
-
-
-        
-
-        
-
-        </form>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Add</button>
       </div>
+      </form>
+
     </div>
   </div>
 </div>
@@ -592,10 +588,10 @@ $dept = $_SESSION['dept'];
                         let selectad = $("#advisor");
                         if(res.status==200){
                             $.each(res.data,function(index,item){
-                                select.append(`<option value="${item.id}">${item.year}</option>`);
+                                select.append(`<option value="${item.year}">${item.year}</option>`);
                             });
                             $.each(res.data1,function(index,item){
-                                selectad.append(`<option value="${item.id}">${item.faculty_name}</option>`);
+                                selectad.append(`<option value="${item.faculty_id}">${item.faculty_name}</option>`);
                             })
                             $("#fac_add").modal("show");
                         }   
@@ -603,6 +599,92 @@ $dept = $_SESSION['dept'];
                     }
                 })
             });
+
+            $(document).on("change", "#year", function (e) {
+    e.preventDefault();
+    var year = $(this).val();
+    console.log(year);
+    
+    $.ajax({
+        type: "POST",
+        url: "backend.php",
+        data: {
+            "yearc": true,
+            "year": year,
+        },
+        success: function (response) {
+            console.log(response);
+            var res = jQuery.parseJSON(response);
+            if (res.status == 200) {
+                console.log(res);
+                var coursesList = $("#courses-list");
+                coursesList.empty();
+
+                res.data.forEach(function (course) {
+                    var checkbox = `<input type="checkbox" name="courses[]" value="${course.code}" class="course-checkbox">${course.code} -  ${course.name} <br>`;
+                    coursesList.append(checkbox);
+                });
+
+                $(".course-checkbox").on("change", function () {
+                    var selectedCourses = $(".course-checkbox:checked").length;
+                    
+                    if (selectedCourses > 8) {
+                        $(this).prop("checked", false);
+                        $("#error-msg").show();
+                    } else {
+                        $("#error-msg").hide();
+                    }
+                });
+            }
+        }
+    });
+});
+
+$(document).on("submit","#add_course",function(e){
+    console.log("hiiii");
+    e.preventDefault();
+    var form = new FormData(this);
+    var courses = $(".course-checkbox:checked").map(function () {
+        return this.value;
+    }).get();
+    form.append("courses",JSON.stringify(courses));
+    form.append("cdata",true);
+    $.ajax({
+        type:"POST",
+        url:"backend.php",
+        data:form,
+        contentType:false,
+        processData:false,
+        success:function(response){
+            var res = jQuery.parseJSON(response);
+            if(res.status==200){
+                alert("assigned succesfully");
+            }
+            else{
+                alert("error");
+            }
+        }
+    })
+});
+
+
+
+            document.getElementById("options").addEventListener("mousedown", function(e) {
+    e.preventDefault();
+    let option = e.target;
+    
+    // Toggle selected state
+    if (option.selected) {
+        option.selected = false;
+    } else {
+        option.selected = true;
+    }
+
+    return false;
+});
+
+
+   
 
            
     </script>
