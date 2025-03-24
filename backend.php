@@ -85,6 +85,20 @@ if(isset($_POST['cdata'])){
     
 }
 
+if(isset($_POST['assign'])){
+    $id = $_POST['flist'];
+    $rid = $_POST['rid'];
+    $sql = "UPDATE advisor_courses SET faculty = '$id' WHERE id = '$rid'";
+    $query_run = mysqli_query($conn,$sql);
+    if($query_run){
+        $res=[
+            "status"=>200,
+            "message"=>"success",
+        ];
+        echo json_encode($res);
+    }
+}
+
 
 
 
