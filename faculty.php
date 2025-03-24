@@ -7,14 +7,7 @@ $result = mysqli_query($conn, $sql);
 $sql1 = "SELECT * FROM students";
 $result1 = mysqli_query($conn, $sql1);
 
-$sec_sql = "SELECT * FROM advisor WHERE faculty_id='$fac_id'";
-$sec_sql_run = mysqli_query($conn,$sql);
-$sec_data = mysqli_fetch_assoc($sec_sql_run);
-$section = $sec_data['section'];
 
-$stud_query = "SELECT * FROM students WHERE section = '$section'";
-$stud_run = mysqli_query($conn,$stud_query);
-$students = mysqli_fetch_assoc($stud_run);
 
 
 ?>
@@ -351,7 +344,10 @@ $students = mysqli_fetch_assoc($stud_run);
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-header mb-3 " style="text-align: right;">
-                                    
+                                    <button id="open_journal" class="btn btn-sm btn btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#journalModal">
+                                        <b></b>
+                                    </button>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -430,13 +426,18 @@ $students = mysqli_fetch_assoc($stud_run);
                                     </div>
                                 </div>
                             </div>
-                     <div class="tab-pane fade show" id="student" role="tabpanel">
+                        </div>
+                    </div>
+
+
+
+                    <div class="tab-pane fade show" id="student" role="tabpanel">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-header mb-3 " style="text-align: right;">
                                     <button id="open_student" class="btn btn-sm btn btn-primary"
                                         data-bs-toggle="modal" data-bs-target="#studentModal">
-                                        <b></b>
+                                        <b>o</b>
                                     </button>
                                 </div>
                                 <div class="card-body">
@@ -463,9 +464,9 @@ $students = mysqli_fetch_assoc($stud_run);
         </div>
     </div>
 
-        <!-- Footer -->
 
-<!------------------------------------MODAL---------------------------------------------->
+    <!-- Footer -->
+     <!------------------------------------MODAL---------------------------------------------->
 
     <!-- Modal -->
     <div class="modal fade" id="coursedetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -517,11 +518,9 @@ $students = mysqli_fetch_assoc($stud_run);
 
 
     <!------------------------------------END MODAL---------------------------------------------->
+    <?php include 'footer.php'; ?>
 
 
-
-
-        <?php include 'footer.php'; ?>
     </div>
     <script src="script.js"> </script>
     <script>
@@ -662,26 +661,26 @@ $students = mysqli_fetch_assoc($stud_run);
             }
         });
 
-    $(document).on("submit", "#facchoose", function(e) {
-        e.preventDefault();
-        var form = new FormData(this);
-        form.append("assign", true);
-        $.ajax({
-            type: "POST",
-            url: "backend.php",
-            data: form,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                var res = jQuery.parseJSON(response);
-                if (res.status == 200) {
-                    alert("asigned succesfully");
+        $(document).on("submit", "#facchoose", function(e) {
+            e.preventDefault();
+            var form = new FormData(this);
+            form.append("assign", true);
+            $.ajax({
+                type: "POST",
+                url: "backend.php",
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    var res = jQuery.parseJSON(response);
+                    if (res.status == 200) {
+                        alert("asigned succesfully");
+                    }
                 }
-            }
+            })
         })
-    })
 
-    $(document).on("click","#cdetail",function(e){
+        $(document).on("click","#cdetail",function(e){
         e.preventDefault();
         var course_id = $(this).val();
         console.log(course_id);
@@ -726,7 +725,6 @@ $students = mysqli_fetch_assoc($stud_run);
         })
 
     });
-
     </script>
 
 </body>
