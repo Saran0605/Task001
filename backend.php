@@ -99,7 +99,36 @@ if(isset($_POST['assign'])){
     }
 }
 
+if(isset($_POST['coursename'])){
+    $course_id = $_POST['id'];
+    $sql="SELECT * FROM course where code='$course_id'";
+    $query_run = mysqli_query($conn,$sql);
+    $query_data = mysqli_fetch_assoc($query_run);
+    if($query_data){
+        $res=[
+            "status"=>200,
+            "message"=>"success",
+            "data"=>$query_data
+        ];
+        echo json_encode($res);
+    }
+}
 
+
+if(isset($_POST['facultyname'])){
+    $fac_id = $_POST['id'];
+    $sql="SELECT * FROM faculty where faculty_id = '$fac_id'";
+    $query_run = mysqli_query($conn,$sql);
+    $query_data = mysqli_fetch_assoc($query_run);
+    if($query_data){
+        $res=[
+            "status"=>200,
+            "message"=>"success",
+            "data"=>$query_data
+        ];
+        echo json_encode($res);
+    }
+}
 
 
 ?>
