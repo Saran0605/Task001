@@ -297,6 +297,23 @@ $stud_run = mysqli_query($conn,$stud_query);
         .breadcrumb-item a:hover {
             color: #224abe;
         }
+
+        .timetable {
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+        }
+        .add-btn {
+            font-size: 14px;
+            padding: 2px 8px;
+        }
     </style>
 </head>
 
@@ -342,6 +359,14 @@ $stud_run = mysqli_query($conn,$stud_query);
                             aria-selected="true">
                             <span class="hidden-xs-down" style="font-size: 0.9em;"><i class="fas fa-book tab-icon"></i>
                                 Students</span>
+                        </a>
+
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" id="edit-bus-tab" href="#time_table" role="tab"
+                            aria-selected="true">
+                            <span class="hidden-xs-down" style="font-size: 0.9em;"><i class="fas fa-book tab-icon"></i>
+                                Time Table</span>
                         </a>
 
                     </li>
@@ -478,6 +503,96 @@ $stud_run = mysqli_query($conn,$stud_query);
                             </div>
                         </div>
                     </div>
+
+                    <div class="tab-pane fade show" id="time_table" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-header mb-3 " style="text-align: right;">
+                                    <button id="open_student" class="btn btn-sm btn btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#studentModal">
+                                        <b>ADD</b>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                <div class="container">
+    <h2 class="text-center my-4"></h2>
+
+    <table class="table table-bordered timetable">
+        <thead>
+            <tr>
+                <th>Time Slot</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hour-1</td>
+                <td data-bs-toggle="modal" data-bs-target="#facdetail"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Hour-2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+        
+            </tr>
+            <tr>
+                <td>Hour-3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Hour-4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Hour-5</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Hour-6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Hour-7</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -528,6 +643,25 @@ $stud_run = mysqli_query($conn,$stud_query);
         </div>
     </div>
     </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Timetable Slot</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label for="subjectInput">Enter Subject:</label>
+                <input type="text" id="subjectInput" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="saveSlot()">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -744,6 +878,22 @@ $stud_run = mysqli_query($conn,$stud_query);
         })
 
     });
+
+
+    var selectedCell;
+    
+    function editSlot(btn) {
+        selectedCell = $(btn).parent(); // Store selected cell
+        $('#editModal').modal('show'); // Show modal
+    }
+
+    function saveSlot() {
+        var subject = $('#subjectInput').val();
+        if (subject.trim() !== '') {
+            selectedCell.html(subject);
+        }
+        $('#editModal').modal('hide');
+    }
     </script>
 
 </body>
