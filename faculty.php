@@ -14,7 +14,7 @@ $section = $sec_data['section'];
 
 $stud_query = "SELECT * FROM students WHERE section = '$section'";
 $stud_run = mysqli_query($conn,$stud_query);
-$students = mysqli_fetch_assoc($stud_run);
+
 
 
 ?>
@@ -351,10 +351,7 @@ $students = mysqli_fetch_assoc($stud_run);
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-header mb-3 " style="text-align: right;">
-                                    <button id="open_journal" class="btn btn-sm btn btn-primary"
-                                        data-bs-toggle="modal" data-bs-target="#journalModal">
-                                        <b></b>
-                                    </button>
+                                    
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -444,7 +441,7 @@ $students = mysqli_fetch_assoc($stud_run);
                                 <div class="card-header mb-3 " style="text-align: right;">
                                     <button id="open_student" class="btn btn-sm btn btn-primary"
                                         data-bs-toggle="modal" data-bs-target="#studentModal">
-                                        <b>o</b>
+                                        <b>ADD</b>
                                     </button>
                                 </div>
                                 <div class="card-body">
@@ -454,12 +451,27 @@ $students = mysqli_fetch_assoc($stud_run);
                                                 <tr>
                                                     <th>S.No</th>
                                                     <th>Register No</th>
-                                                    <th>Students</th>
+                                                    <th>Student Name</th>
                                                     <th style="width: 200px;">Action</th>
 
                                                 </tr>
                                             </thead>
-                                            
+                                            <tbody>
+                                            <?php
+                                            $s=1;
+                                            while($students = mysqli_fetch_assoc($stud_run)){
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $s++ ?></td>
+                                                    <td><?php echo $students['reg_no'] ?></td>
+                                                    <td><?php echo $students['name'] ?></td>
+                                                    <td><button class="btn btn-info">Edit</button>&nbsp;<button class="btn btn-danger">Delete</button></td>
+
+                                                </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
