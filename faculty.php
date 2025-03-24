@@ -519,73 +519,47 @@ $stud_run = mysqli_query($conn,$stud_query);
 
     <table class="table table-bordered timetable">
         <thead>
+
             <tr>
-                <th>Time Slot</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
+                <th>Day</th>
+                <th>Hour-1</th>
+                <th>Hour-2</th>
+                <th>Hour-3</th>
+                <th>Hour-4</th>
+                <th>Hour-5</th>
+                <th>Hour-6</th>
+                <th>Hour-7</th>
+
+
             </tr>
         </thead>
         <tbody>
+            <?php 
+            $tt_sql = "SELECT * FROM time_table WHERE section='$section'";
+            $tt_run = mysqli_query($conn,$tt_sql);
+            while($row = mysqli_fetch_assoc($tt_run)){
+            
+            ?>
             <tr>
-                <td>Hour-1</td>
-                <td data-bs-toggle="modal" data-bs-target="#facdetail"></td>
+                <td><?php echo $row['day']; ?></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+
             </tr>
-            <tr>
-                <td>Hour-2</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-        
-            </tr>
-            <tr>
-                <td>Hour-3</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Hour-4</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Hour-5</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Hour-6</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Hour-7</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php
+            }
+            ?>
+
+
+
+
+            
         </tbody>
     </table>
 </div>
