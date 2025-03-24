@@ -342,70 +342,82 @@ $result1 = mysqli_query($conn, $sql1);
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-header mb-3 " style="text-align: right;">
-                                    <button id="open_journal" class="btn btn-sm btn btn-primary"
-                                        data-bs-toggle="modal" data-bs-target="#journalModal">
-                                        <b></b>
-                                    </button>
+                                    
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="journal_table" class="table table-striped table-bordered">
-                                            <thead class="gradient-header">
+                                    <table id="journal_table" class="table table-striped table-bordered">
+                                                    <thead class="gradient-header">
 
-                                                <tr>
-                                                    <th>S.No</th>
-                                                    <th>Course</th>
-                                                    <th>Choose Faculty</th>
-                                                    <th>Alloted Faculty</th>
-                                                    <th style="width: 200px;">Action</th>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Course</th>
+                                                            <th>Choose Faculty</th>
+                                                            <th>Alloted Faculty</th>
+                                                            <th style="width: 200px;">Action</th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                // Fetch all faculty members once before the loop
-                                                $faculty_query = "SELECT * FROM faculty WHERE department='$dept'";
-                                                $faculty_result = mysqli_query($conn, $faculty_query);
-                                                $faculty_list = [];
-                                                while ($row = mysqli_fetch_assoc($faculty_result)) {
-                                                    $faculty_list[] = $row;
-                                                }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        // Fetch all faculty members once before the loop
+                                                        $faculty_query = "SELECT * FROM faculty WHERE department='$dept'";
+                                                        $faculty_result = mysqli_query($conn, $faculty_query);
+                                                        $faculty_list = [];
+                                                        while ($row = mysqli_fetch_assoc($faculty_result)) {
+                                                            $faculty_list[] = $row;
+                                                        }
 
-$s = 1;
-while ($data = mysqli_fetch_assoc($result)) { // Fetch courses
-?>
+                                                        $s = 1;
+                                                        while ($data = mysqli_fetch_assoc($result)) { // Fetch courses
+                                                        ?>
                                                         <tr>
                                                             <td><?= $s++; ?></td> <!-- Corrected S.No display -->
-                                                            <td><?= $data['course_id']; ?></td>
+                                                            <td><button class="btn btn-primary" type="button" id="cdetail" value="<?= $data['course_id']; ?>" data-bs-toggle="modal" data-bs-target="#coursedetail"><?= $data['course_id']; ?></button></td>
                                                             <!-- Fixed echo issue -->
                                                             <td>
                                                                 <form id="facchoose">
                                                                     <input type="text" name="rid"
                                                                         value="<?php echo $data['id']; ?>" hidden>
                                                                     <select id="flist" name="flist">
-                                                                        <option value="">Choose Faculty</option>
+                                                                        <option value="" disabled selected>Choose Faculty</option>
                                                                         <?php
-                foreach ($faculty_list as $faculty) {
-                ?>
+                                                                        foreach ($faculty_list as $faculty) {
+                                                                        ?>
                                                                         <option value="<?= $faculty['faculty_id'] ?>">
                                                                             <?= $faculty['faculty_name'] ?></option>
                                                                         <?php
-                }
-                ?>
+                                                                        }
+                                                                        ?>
                                                                     </select>
                                                                     <button type="submit" id="btn"
-                                                                        value="<?php echo $data['id']; ?>">Assign</button>
+                                                                        value="<?php echo $data['id']; ?>" class="btn btn-secondary">Assign</button>
                                                                 </form>
                                                             </td>
-                                                            <td><?php echo $data['faculty']; ?></td>
-                                                            <td><button>Delete</button></td>
+                                                            
+                                                            <td>
+                                                            <?php
+                                                            if($data['faculty']==NULL){
+                                                                ?>
+                                                                <button class="btn btn-dark">Not Assigned</button>
+                                                            <?php
+                                                            }
+                                                            else{
+                                                                ?>
+                                                            <button type="button" id="fdetail" value="<?= $data['faculty'];?>" data-bs-toggle="modal" data-bs-target="#facdetail" class="btn btn-success"><?php echo $data['faculty']; ?></button></td>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                            <td><button class="btn btn-danger">Delete</button></td>
                                                         </tr>
                                                         <?php
-}
-?>
+                                                    }
+                                                    ?>
 
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+
+
+                                                </table>
                                     </div>
                                 </div>
                             </div>
@@ -454,6 +466,63 @@ while ($data = mysqli_fetch_assoc($result)) { // Fetch courses
 
 
         <!-- Footer -->
+
+<!------------------------------------MODAL---------------------------------------------->
+
+    <!-- Modal -->
+    <div class="modal fade" id="coursedetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+            Course name: <span id="coursename">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="modal fade" id="facdetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+            Faculty name: <span id="facname">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+    <!------------------------------------END MODAL---------------------------------------------->
+
+
+
+
         <?php include 'footer.php'; ?>
     </div>
     <script src="script.js"> </script>
@@ -613,6 +682,53 @@ while ($data = mysqli_fetch_assoc($result)) { // Fetch courses
             }
         })
     })
+
+    $(document).on("click","#cdetail",function(e){
+        e.preventDefault();
+        var course_id = $(this).val();
+        console.log(course_id);
+        $.ajax({
+            type:"POST",
+            url:"backend.php",
+            data:{
+                "id":course_id,
+                "coursename":true
+            },
+            success:function(response){
+                var res =jQuery.parseJSON(response);
+                console.log(response);
+                if(res.status == 200){
+                    $('#coursename').text(res.data.name);
+                    $('#coursedetail').modal('show');
+                }
+            }
+        })
+
+    });
+
+    $(document).on("click","#fdetail",function(e){
+        e.preventDefault();
+        var fac_id = $(this).val();
+        console.log(fac_id);
+        $.ajax({
+            type:"POST",
+            url:"backend.php",
+            data:{
+                "id":fac_id,
+                "facultyname":true
+            },
+            success:function(response){
+                var res =jQuery.parseJSON(response);
+                console.log(response);
+                if(res.status == 200){
+                    $('#facname').text(res.data.faculty_name);
+                    $('#facdetail').modal('show');
+                }
+            }
+        })
+
+    });
+
     </script>
 
 </body>
