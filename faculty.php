@@ -7,7 +7,14 @@ $result = mysqli_query($conn, $sql);
 $sql1 = "SELECT * FROM students";
 $result1 = mysqli_query($conn, $sql1);
 
+$sec_sql = "SELECT * FROM advisor WHERE faculty_id='$fac_id'";
+$sec_sql_run = mysqli_query($conn,$sql);
+$sec_data = mysqli_fetch_assoc($sec_sql_run);
+$section = $sec_data['section'];
 
+$stud_query = "SELECT * FROM students WHERE section = '$section'";
+$stud_run = mysqli_query($conn,$stud_query);
+$students = mysqli_fetch_assoc($stud_run);
 
 
 ?>
