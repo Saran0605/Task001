@@ -314,6 +314,11 @@ $stud_run = mysqli_query($conn,$stud_query);
             font-size: 14px;
             padding: 2px 8px;
         }
+
+        .timetable td:hover {
+    background-color:rgb(78, 184, 230);
+    transition: background-color 0.3s ease;
+}
     </style>
 </head>
 
@@ -542,15 +547,13 @@ $stud_run = mysqli_query($conn,$stud_query);
             ?>
             <tr>
                 <td><?php echo $row['day']; ?></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-
+                <td value="" data-hour="hour1" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
+                <td value="" data-hour="hour2" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
+                <td value="" data-hour="hour3" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
+                <td value="" data-hour="hour4" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
+                <td value="" data-hour="hour5" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
+                <td value="" data-hour="hour6" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
+                <td value="" data-hour="hour7" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
             </tr>
             <?php
             }
@@ -636,6 +639,27 @@ $stud_run = mysqli_query($conn,$stud_query);
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="tt_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                Enter subject Details
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
 
 
 
