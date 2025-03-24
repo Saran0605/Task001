@@ -522,7 +522,7 @@ $stud_run = mysqli_query($conn,$stud_query);
                                 <div class="container">
     <h2 class="text-center my-4"></h2>
 
-    <table class="table table-bordered timetable">
+    <table id="tt_table" class="table table-bordered timetable">
         <thead>
 
             <tr>
@@ -547,13 +547,66 @@ $stud_run = mysqli_query($conn,$stud_query);
             ?>
             <tr>
                 <td><?php echo $row['day']; ?></td>
-                <td value="" data-hour="hour1" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
-                <td value="" data-hour="hour2" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
-                <td value="" data-hour="hour3" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
-                <td value="" data-hour="hour4" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
-                <td value="" data-hour="hour5" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
-                <td value="" data-hour="hour6" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
-                <td value="" data-hour="hour7" data-bs-toggle="modal" data-bs-target="#tt_modal"></td>
+                <td value="<?php echo $row['id']; ?>" data-hour="hour1" class="tt">
+                    <?php
+                    if($row['hour1']!=NULL){
+                    
+                    ?>
+                    Subject : <?php echo $row['hour1']; ?>
+                    <?php
+                    }
+                    ?>
+                   
+
+                </td>
+                <td value="<?php echo $row['id']; ?>" data-hour="hour2" class="tt"><?php
+                    if($row['hour2']!=NULL){
+                    
+                    ?>
+                    Subject : <?php echo $row['hour2']; ?>
+                    <?php
+                    }
+                    ?></td>
+                <td value="<?php echo $row['id']; ?>" data-hour="hour3" class="tt"><?php
+                    if($row['hour3']!=NULL){
+                    
+                    ?>
+                    Subject : <?php echo $row['hour3']; ?>
+                    <?php
+                    }
+                    ?></td>
+                <td value="<?php echo $row['id']; ?>" data-hour="hour4" class="tt"><?php
+                    if($row['hour4']!=NULL){
+                    
+                    ?>
+                    Subject : <?php echo $row['hour4']; ?>
+                    <?php
+                    }
+                    ?></td>
+                <td value="<?php echo $row['id']; ?>" data-hour="hour5" class="tt"><?php
+                    if($row['hour5']!=NULL){
+                    
+                    ?>
+                    Subject : <?php echo $row['hour5']; ?>
+                    <?php
+                    }
+                    ?></td>
+                <td value="<?php echo $row['id']; ?>" data-hour="hour6" class="tt"><?php
+                    if($row['hour6']!=NULL){
+                    
+                    ?>
+                    Subject : <?php echo $row['hour6']; ?>
+                    <?php
+                    }
+                    ?></td>
+                <td value="<?php echo $row['id']; ?>" data-hour="hour7" class="tt"><?php
+                    if($row['hour7']!=NULL){
+                    
+                    ?>
+                    Subject : <?php echo $row['hour7']; ?>
+                    <?php
+                    }
+                    ?></td>
             </tr>
             <?php
             }
@@ -594,7 +647,6 @@ $stud_run = mysqli_query($conn,$stud_query);
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
         </div>
         </div>
     </div>
@@ -615,30 +667,12 @@ $stud_run = mysqli_query($conn,$stud_query);
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
         </div>
         </div>
     </div>
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Timetable Slot</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <label for="subjectInput">Enter Subject:</label>
-                <input type="text" id="subjectInput" class="form-control">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" onclick="saveSlot()">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+ 
 
 
 <div class="modal fade" id="tt_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -649,13 +683,20 @@ $stud_run = mysqli_query($conn,$stud_query);
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
-                Enter subject Details
-            </form>
+            <form id="tt_sub">
+                <input type="text" id="row" name="id" hidden>
+                <input type="text" id="hour" name="hour" hidden>
+                <label for="year">Select course:</label>
+                <select id="course" name="code">
+                <option value="" disabled selected>Choose course</option>
+                </select>
+
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
         </div>
         </div>
     </div>
@@ -892,6 +933,62 @@ $stud_run = mysqli_query($conn,$stud_query);
         }
         $('#editModal').modal('hide');
     }
+
+
+    $(document).on("click",".tt",function(e){
+        e.preventDefault();
+        var row_id = $(this).attr("value");
+        $("#row").val(row_id);
+        var hour_id = $(this).data("hour");
+        $("#hour").val(hour_id);
+
+        $("#tt_modal").modal('show');
+        $.ajax({
+            type:"POST",
+            url:"backend.php",
+            data:{
+                "indcourse":true,
+            },
+            success:function(response){
+                var res = jQuery.parseJSON(response);
+                let select = $("#course");
+
+                if(res.status==200){
+                    $.each(res.data,function(index,item){
+                                select.append(`<option value="${item.course_id}">${item.course_id}</option>`);
+                            });
+                }
+            }
+        })
+
+
+
+    });
+
+    $(document).on("submit","#tt_sub",function(e){
+        e.preventDefault();
+        var form = new FormData(this);
+        console.log(form);
+
+        form.append("tt",true);
+        console.log("hii");
+        $.ajax({
+            type:"POST",
+            url:"backend.php",
+            data:form,
+            processData:false,
+            contentType:false,
+            success:function(response){
+                console.log(response);
+                var res = jQuery.parseJSON(response);
+                if(res.status==200){
+                    alert("done");
+                }
+            }
+        })
+
+
+    })
     </script>
 
 </body>

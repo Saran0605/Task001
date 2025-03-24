@@ -1,6 +1,8 @@
 <?php
 
 include("db.php");
+$fac_id = $_SESSION['faculty_id'];
+
 
 if(isset($_POST['faclogin'])){
     $id=$_POST['id'];
@@ -128,6 +130,45 @@ if(isset($_POST['facultyname'])){
         ];
         echo json_encode($res);
     }
+}
+
+if(isset($_POST['indcourse'])){
+
+    $sql = "SELECT * FROM advisor_courses WHERE advisor_id='$fac_id'";
+    $sql_run = mysqli_query($conn,$sql);
+    $query_data = mysqli_fetch_all($sql_run,MYSQLI_ASSOC);
+    if($query_data){
+        $res=[
+            "status"=>200,
+            "message"=>"done",
+            "data"=>$query_data,
+
+        ];
+        echo json_encode($res);
+    }
+
+}
+
+
+if(isset($_POST['tt'])){
+    $row = $_POST['id'];
+    $hour = $_POST['hour'];
+    $course = $_POST['code'];
+    $sql = "SELECT * FROM advisor WHERE faculty_id='$fac_id'";
+    $sql_run = mysqli_query($conn,$sql);
+    $sql_data = mysqli_fetch_array($sql_run);
+    $year = $sql_data['year'];
+    $section = $sql_data['section'];
+    $sql1  = "UPDATE time_table SET $hour='$course' WHERE id='$row'";
+    $sql1_run = mysqli_query($conn,$sql1);
+    if($sql1_run){
+        $res=[
+            "status"=>200,
+            "message"=>"Done",
+        ];
+        echo json_encode($res);
+    }
+
 }
 
 
