@@ -7,6 +7,15 @@ $result = mysqli_query($conn, $sql);
 $sql1 = "SELECT * FROM students";
 $result1 = mysqli_query($conn, $sql1);
 
+$sec_sql = "SELECT * FROM advisor WHERE faculty_id='$fac_id'";
+$sec_sql_run = mysqli_query($conn,$sql);
+$sec_data = mysqli_fetch_assoc($sec_sql_run);
+$section = $sec_data['section'];
+
+$stud_query = "SELECT * FROM students WHERE section = '$section'";
+$stud_run = mysqli_query($conn,$stud_query);
+$students = mysqli_fetch_assoc($stud_run);
+
 
 ?>
 
@@ -421,39 +430,29 @@ $result1 = mysqli_query($conn, $sql1);
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane p-20" id="student" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-md-12">
+                     <div class="tab-pane fade show" id="student" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-header mb-3 " style="text-align: right;">
+                                    <button id="open_student" class="btn btn-sm btn btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#studentModal">
+                                        <b></b>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="journal_table" class="table table-striped table-bordered">
+                                            <thead class="gradient-header">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Register No</th>
+                                                    <th>Students</th>
+                                                    <th style="width: 200px;">Action</th>
 
-                                        <div class="card-header mb-3" style="text-align: right;">
-                                            <!-- <h4 class="mb-0">Conference Information</h4> -->
-                                            <button id="open_conference" class="btn btn-sm btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#conferenceModal">
-                                                <b>Open Conference Form</b></button>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table id="conference_table" class="table table-striped table-bordered">
-                                                    <thead class="gradient-header">
-                                                        <tr>
-                                                            <th>S.No</th>
-                                                            <th>Paper Title</th>
-                                                            <th>Conference Name</th>
-                                                            <th>Conference Details</th>
-                                                            <th>Document</th>
-                                                            <th style="width: 200px;">Action</th>
-                                                        </tr>
-                                                    </thead>
-
-                                                </table>
-
-
-                                            </div>
-
-
-
-                                        </div>
+                                                </tr>
+                                            </thead>
+                                            
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -463,7 +462,6 @@ $result1 = mysqli_query($conn, $sql1);
             </div>
         </div>
     </div>
-
 
         <!-- Footer -->
 
