@@ -1170,6 +1170,7 @@ $(document).ready(function() {
                     $("#c_name").text(res.cname);
                     $("#f_name").text(res.fac_name);
                     $("#hmodal").modal('show');
+                    
 
 
 
