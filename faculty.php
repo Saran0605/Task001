@@ -11,6 +11,9 @@ $sec_sql = "SELECT * FROM advisor WHERE faculty_id='$fac_id'";
 $sec_sql_run = mysqli_query($conn,$sql);
 $sec_data = mysqli_fetch_assoc($sec_sql_run);
 $section = $sec_data['section'];
+$year = $sec_data['year'];
+$_SESSION['section'] = $section;
+$_SESSION['year'] = $year;
 
 $stud_query = "SELECT * FROM students WHERE section = '$section'";
 $stud_run = mysqli_query($conn,$stud_query);
@@ -322,6 +325,12 @@ $stud_run = mysqli_query($conn,$stud_query);
     .timetable td:hover {
         background-color: rgb(78, 184, 230);
         transition: background-color 0.3s ease;
+    }
+    #table3 td:hover{
+        background-color: rgb(78, 184, 230);
+
+
+
     }
     </style>
 </head>
@@ -667,6 +676,7 @@ $stud_run = mysqli_query($conn,$stud_query);
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-header mb-3 " style="text-align: right;">
+                                    Date : <h2 id="date"></h2>
                                    
                                 </div>
                                 <div class="card-body">
@@ -687,6 +697,15 @@ $stud_run = mysqli_query($conn,$stud_query);
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <td id="day"></td>
+                                                <td id="h1" class="hatt"></td>
+                                                <td id="h2" class="hatt"></td>
+                                                <td id="h3" class="hatt"></td>
+                                                <td id="h4" class="hatt"></td>
+                                                <td id="h5" class="hatt"></td>
+                                                <td id="h6" class="hatt"></td>
+                                                <td id="h7" class="hatt"></td>
+
 
                                             </tbody>
                                             
@@ -774,6 +793,32 @@ $stud_run = mysqli_query($conn,$stud_query);
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="hmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                       Course name  : <span id="c_name"></span><br><br>
+                       Faculty name : <span id="f_name"></span><br><br>
+                    </form>
+                   
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
 
                 </div>
             </div>
@@ -1089,12 +1134,52 @@ $(document).ready(function() {
             success:function(response){
                 var res = jQuery.parseJSON(response);
                 if(res.status==200){
-                    
+                    $("#day").text(res.data.day);
+                    $("#h1").text(res.data.hour1);
+                    $("#h2").text(res.data.hour2);
+                    $("#h3").text(res.data.hour3);
+                    $("#h4").text(res.data.hour4);
+                    $("#h5").text(res.data.hour5);
+                    $("#h6").text(res.data.hour6);
+                    $("#h7").text(res.data.hour7);
+                    $("#date").text(res.date);
+
+
                     
                 }
             }
 
         })
+    });
+
+
+    $(document).on("click",".hatt",function(e){
+        e.preventDefault();
+        var code = $(this).text();
+        $.ajax({
+            type:"POST",
+            url:"backend.php",
+            data:{
+                "code":code,
+                "getcdetail":true,
+            },
+            success:function(response){
+                console.log(response);
+                var res = jQuery.parseJSON(response);
+                if(res.status==200){
+                    $("#c_name").text(res.cname);
+                    $("#f_name").text(res.fac_name);
+                    $("#hmodal").modal('show');
+
+
+
+
+
+                }
+                    
+            }
+        })
+        
     })
     </script>
 

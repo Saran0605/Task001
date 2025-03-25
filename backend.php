@@ -2,6 +2,8 @@
 
 include("db.php");
 $fac_id = $_SESSION['faculty_id'];
+$section = $_SESSION['section'];
+$year = $_SESSION['year'];
 
 
 if(isset($_POST['faclogin'])){
@@ -171,5 +173,49 @@ if(isset($_POST['tt'])){
 
 }
 
+if(isset($_POST['get_tt'])){
+    $date = date("d/m/Y");
+    $day = date("l");
+    $sql = "SELECT * FROM time_table WHERE section='$section' AND year='$year' AND day = '$day' ";
+    $sql_run = mysqli_query($conn,$sql);
+    $sql_data = mysqli_fetch_array($sql_run);
+    if($sql_data){
+        $res=[
+            "status"=>200,
+            "message"=>"done",
+            "data"=>$sql_data,
+            "date"=>$date,
+        ];
+        echo json_encode($res);
+    }
+}
 
+if(isset($_POST['getcdetail'])){
+    $code = $_POST['code'];
+    $sql = "SELECT * FROM advisor_courses WHERE course_id='$code'";
+    $sql_run = mysqli_query($conn,$sql);
+    $sql_data = mysqli_fetch_array($sql_run);
+    $fac1_id = $sql_data['faculty'];
+    $sql1 = "SELECT * FROM faculty WHERE faculty_id='$fac1_id'";
+    $sql1_run = mysqli_query($conn,$sql1);
+    $sql1_data = mysqli_fetch_array($sql1_run);
+    $fac1_name = $sql1_data['faculty_name'];
+    $sql2 = "SELECT * FROM course WHERE code='$code'";
+    $sql2_run  = mysqli_query($conn,$sql2);
+    $sql2_data = mysqli_fetch_array($sql2_run);
+    $c_name = $sql2_data['name'];
+    if($sql_data && $sql1_data && $sql2_data){
+        $res=[
+            "status"=>200,
+            "message"=>"succcess",
+            "cname"=>$c_name,
+            "fac_name"=>$fac1_name,
+        ];
+        echo json_encode($res);
+    }
+
+
+
+
+}
 ?>
