@@ -681,7 +681,47 @@ $stud_run = mysqli_query($conn,$stud_query);
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
+                                        <h2>Advisor TimeTable</h2>
                                         <table id="table3" class="table table-striped table-bordered">
+                                            <thead class="gradient-header">
+                                                <tr>
+                                                    <th>Day</th>
+                                                    <th>Hour-1</th>
+                                                    <th>Hour-2</th>
+                                                    <th>Hour-3</th>
+                                                    <th>Hour-4</th>
+                                                    <th>Hour-5</th>
+                                                    <th>Hour-6</th>
+                                                    <th>Hour-7</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td id="day"></td>
+                                                <td id="h1" class="hatt"></td>
+                                                <td id="h2" class="hatt"></td>
+                                                <td id="h3" class="hatt"></td>
+                                                <td id="h4" class="hatt"></td>
+                                                <td id="h5" class="hatt"></td>
+                                                <td id="h6" class="hatt"></td>
+                                                <td id="h7" class="hatt"></td>
+
+
+                                            </tbody>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                                <br><br><br>
+
+
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                    <h2>Subject Wise TimeTable</h2>
+
+                                        <table id="table4" class="table table-striped table-bordered">
                                             <thead class="gradient-header">
                                                 <tr>
                                                     <th>Day</th>
@@ -1170,15 +1210,24 @@ $(document).ready(function() {
                     $("#c_name").text(res.cname);
                     $("#f_name").text(res.fac_name);
                     $("#hmodal").modal('show');
-                    
-
-
-
-
-
                 }
                     
             }
+        });
+        $.ajax({
+            type:"POST",
+            url:"backend.php",
+            data:{
+                getinddetail:true,
+            },
+            success:function(response){
+                var res = jQuery.parseJSON(response);
+                if(res.status==200){
+                    
+
+                }
+            }
+
         })
         
     })
