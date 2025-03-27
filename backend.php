@@ -6,26 +6,9 @@ $section = $_SESSION['section'];
 $year = $_SESSION['year'];
 
 
-if(isset($_POST['faclogin'])){
-    $id=$_POST['id'];
-    $pass=$_POST['pass'];
-    $_SESSION['faculty_id'] = $id;
-    $sql="SELECT * FROM faculty WHERE faculty_id='$id' AND pass='$pass'" ;
-    $query_run=mysqli_query($conn,$sql);
-    $query_data=mysqli_fetch_assoc($query_run);
-    $role = $query_data['role'];
-    $_SESSION['role'] = $role;
-    $dept = $query_data['department'];
-    $_SESSION['dept'] = $dept;
-    if($query_data!= NULL){
-        $res=[
-            "status"=>"200",
-            "message"=>"success",
-            
-        ];
-    }
-    echo json_encode($res);
-}
+
+
+
 
 
 if(isset($_POST['course'])){
@@ -190,6 +173,8 @@ if(isset($_POST['get_tt'])){
     }
 }
 
+
+
 if(isset($_POST['getcdetail'])){
     $code = $_POST['code'];
     $sql = "SELECT * FROM advisor_courses WHERE course_id='$code'";
@@ -218,4 +203,5 @@ if(isset($_POST['getcdetail'])){
 
 
 }
+
 ?>
