@@ -362,6 +362,7 @@ $stud_run = mysqli_query($conn,$stud_query);
         <!-- Content Area -->
         <div class="container-fluid">
             <div class="custom-tabs">
+                <h2><?php echo $section; ?></h2>
                 <ul class="nav nav-tabs" role="tablist">
                     <!-- Center the main tabs -->
                     <li class="nav-item" role="presentation">
@@ -572,7 +573,7 @@ $stud_run = mysqli_query($conn,$stud_query);
                                             </thead>
                                             <tbody>
                                                                 <?php 
-                                        $tt_sql = "SELECT * FROM time_table WHERE section='$section'";
+                                        $tt_sql = "SELECT * FROM time_table WHERE section='$section' AND dept='$dept' AND section='$section'";
                                         $tt_run = mysqli_query($conn,$tt_sql);
                                         while($row = mysqli_fetch_assoc($tt_run)){
                                         
@@ -737,14 +738,14 @@ $stud_run = mysqli_query($conn,$stud_query);
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td id="day"></td>
-                                                <td id="h1" class="hatt"></td>
-                                                <td id="h2" class="hatt"></td>
-                                                <td id="h3" class="hatt"></td>
-                                                <td id="h4" class="hatt"></td>
-                                                <td id="h5" class="hatt"></td>
-                                                <td id="h6" class="hatt"></td>
-                                                <td id="h7" class="hatt"></td>
+                                                <td id="day2"></td>
+                                                <td id="h11" class="hatt1"></td>
+                                                <td id="h22" class="hatt1"></td>
+                                                <td id="h33" class="hatt1"></td>
+                                                <td id="h44" class="hatt1"></td>
+                                                <td id="h55" class="hatt1"></td>
+                                                <td id="h66" class="hatt1"></td>
+                                                <td id="h77" class="hatt1"></td>
 
 
                                             </tbody>
@@ -852,8 +853,77 @@ $stud_run = mysqli_query($conn,$stud_query);
                     <form action="">
                        Course name  : <span id="c_name"></span><br><br>
                        Faculty name : <span id="f_name"></span><br><br>
+
+                       <table id="stu_list" class="table table-striped table-bordered">
+                        <thead class="gradient-header">
+                            <th>sno</th>
+                            <th>Reg</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $msql1 = "SELECT * FROM students WHERE section = '$section'";
+                            $msql1_run = mysqli_query($conn,$msql1);
+                            $g = 1;
+                            while($row = mysqli_fetch_array($msql1_run)){
+                            ?>
+                            <tr>
+                                <td>
+                                    <?php echo $g++;  ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['reg_no']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['name']; ?>
+                                </td>
+                                <td>
+                                    <button>
+                                        present
+
+                                    </button>
+                                    <button>
+                                        absent
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                            
+                        </tbody>
+                       </table>
+                       
+
                     </form>
                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <div class="modal fade" id="tt2_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Course Name: <span id="c_name1"></span><br><br>
+                    Year: <span id="year1"></span><br><br>
+                    Department: <span id="dept1"></span><br><br>
+                    Section: <span id="section1"></span><br><br>
+                  
 
                 </div>
                 <div class="modal-footer">
@@ -1214,23 +1284,63 @@ $(document).ready(function() {
                     
             }
         });
+    });
+
+    $(document).ready(function(){
+        console.log("done");
         $.ajax({
             type:"POST",
             url:"backend.php",
             data:{
-                getinddetail:true,
+                "getothertt":true
+            },
+            success:function(response){
+                var res = jQuery.parseJSON(response);
+                $.each(res, function(index, data) {
+                        $("#day2").text(data.day);   
+
+                        $("#h11").text(data.schedule.hour1 || "-");
+                        $("#h22").text(data.schedule.hour2 || "-");
+                        $("#h33").text(data.schedule.hour3 || "-");
+                        $("#h44").text(data.schedule.hour4 || "-");
+                        $("#h55").text(data.schedule.hour5 || "-");
+                        $("#h66").text(data.schedule.hour6 || "-");
+                        $("#h77").text(data.schedule.hour7 || "-");
+                    });            }
+            
+        })
+
+
+    });
+
+    $(document).on("click",".hatt1",function(e){
+        var course = $(this).text();
+        if(course=='-'){
+            alert("you dont have any class");
+        }
+        e.preventDefault();
+        $.ajax({
+            type:"POST",
+            url:"backend.php",
+            data:{
+                "course1":course,
+                "fetch_c_detail":true,
             },
             success:function(response){
                 var res = jQuery.parseJSON(response);
                 if(res.status==200){
-                    
+                    $("#c_name1").text(res.c_name);
+                    $("#year1").text(res.year);
+                    $("#dept1").text(res.dept);
+                    $("#section1").text(res.section);
+                    $("#tt2_modal").modal("show");
+                  
 
                 }
             }
-
         })
-        
-    })
+
+    });
     </script>
 
 </body>

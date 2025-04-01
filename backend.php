@@ -4,6 +4,7 @@ include("db.php");
 $fac_id = $_SESSION['faculty_id'];
 $section = $_SESSION['section'];
 $year = $_SESSION['year'];
+$dept = $_SESSION['dept'];
 
 
 
@@ -55,13 +56,25 @@ if(isset($_POST['cdata'])){
     $run = false;
     $query = "INSERT INTO advisor(faculty_id,year,section) VALUES('$advisor_id','$year','$section')";
     $q_run = mysqli_query($conn,$query);
+    $sql_dept = "SELECT * FROM faculty WHERE faculty_id='$advisor_id'";
+    $sql_dept_run = mysqli_query($conn,$sql_dept);
+    $sql_dept_data = mysqli_fetch_array($sql_dept_run);
+    $dept = $sql_dept_data['department'];
 
     foreach($courses as $course){
-        $sql = "INSERT INTO advisor_courses(advisor_id,course_id,section,year) VALUES('$advisor_id','$course','$section','$year')";
+        $sql = "INSERT INTO advisor_courses(advisor_id,course_id,section,year,dept) VALUES('$advisor_id','$course','$section','$year','$dept')";
         $query_run = mysqli_query($conn,$sql);
         $run = true;
 
     }
+
+    $sql_tt = "INSERT INTO time_table (year, dept, section, day, hour1, hour2, hour3, hour4, hour5, hour6, hour7) VALUES 
+    ('$year', '$dept', '$section', 'Monday', '', '', '', '', '', '', ''),
+    ('$year', '$dept', '$section', 'Tuesday', '', '', '', '', '', '', ''),
+    ('$year', '$dept', '$section', 'Wednesday', '', '', '', '', '', '', ''),
+    ('$year', '$dept', '$section', 'Thursday', '', '', '', '', '', '', ''),
+    ('$year', '$dept', '$section', 'Friday', '', '', '', '', '', '', '')";
+    $sql_tt_run = mysqli_query($conn,$sql_tt);
     if($run){
         $res=[
             "status"=>200,
@@ -159,7 +172,7 @@ if(isset($_POST['tt'])){
 if(isset($_POST['get_tt'])){
     $date = date("d/m/Y");
     $day = date("l");
-    $sql = "SELECT * FROM time_table WHERE section='$section' AND year='$year' AND day = '$day' ";
+    $sql = "SELECT * FROM time_table WHERE section='$section' AND year='$year' AND day = '$day' AND dept='$dept' ";
     $sql_run = mysqli_query($conn,$sql);
     $sql_data = mysqli_fetch_array($sql_run);
     if($sql_data){
@@ -177,7 +190,7 @@ if(isset($_POST['get_tt'])){
 
 if(isset($_POST['getcdetail'])){
     $code = $_POST['code'];
-    $sql = "SELECT * FROM advisor_courses WHERE course_id='$code'";
+    $sql = "SELECT * FROM advisor_courses WHERE course_id='$code' AND dept='$dept'";
     $sql_run = mysqli_query($conn,$sql);
     $sql_data = mysqli_fetch_array($sql_run);
     $fac1_id = $sql_data['faculty'];
@@ -203,5 +216,78 @@ if(isset($_POST['getcdetail'])){
 
 
 }
+
+if(isset($_POST["getothertt"])){
+
+    // Fetch courses assigned to this faculty
+    $sql1 = "SELECT course_id FROM advisor_courses WHERE faculty='$fac_id'";
+    $sql1_run = mysqli_query($conn, $sql1);
+
+    $courses = [];
+    while($sql1_data = mysqli_fetch_assoc($sql1_run)){
+        $courses[] = $sql1_data['course_id'];
+    }
+
+    if(!empty($courses)){
+        $today = date('l'); 
+
+        // Fetch timetable where the day is today
+        $sql2 = "SELECT * FROM time_table WHERE day='$today'";
+        $sql2_run = mysqli_query($conn, $sql2);
+
+        $timetable = [];
+        while($row = mysqli_fetch_assoc($sql2_run)){
+            $entry = [
+                "year" => $row["year"],
+                "department" => $row["dept"],
+                "section" => $row["section"],
+                "day" => $row["day"],
+                "schedule" => []
+            ];
+
+            for($i = 1; $i <= 7; $i++){
+                $hour = "hour" . $i;
+                if(in_array($row[$hour], $courses)){ 
+                    $entry["schedule"][$hour] = $row[$hour];
+                }
+            }
+
+            if(!empty($entry["schedule"])){
+                $timetable[] = $entry;
+            }
+        }
+
+        echo json_encode($timetable);
+    } else {
+        echo json_encode(["error" => "No courses found for this faculty"]);
+    }
+}
+
+if(isset($_POST['fetch_c_detail'])){
+    $code = $_POST['course1'];
+    $sql1 = "SELECT * FROM course WHERE code='$code'";
+    $sql2 = "SELECT * FROM advisor_courses WHERE course_id='$code' AND faculty='$fac_id'";
+    $sql1_run = mysqli_query($conn,$sql1);
+    $sql2_run = mysqli_query($conn,$sql2);
+    $sql1_data = mysqli_fetch_array($sql1_run);
+    $sql2_data = mysqli_fetch_array($sql2_run);
+    $year = $sql2_data['year'];
+    $section = $sql2_data['section'];
+    $dept = $sql2_data['dept'];
+    $c_name = $sql1_data['name'];
+    if($sql2_data){
+        $res=[
+            "status"=>200,
+            "dept"=>$dept,
+            "section"=>$section,
+            "year"=>$year,
+            "c_name"=>$c_name,
+        ];
+        echo json_encode($res);
+    }
+
+
+}
+
 
 ?>
