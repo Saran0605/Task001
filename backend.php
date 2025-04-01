@@ -275,6 +275,14 @@ if(isset($_POST['fetch_c_detail'])){
     $section = $sql2_data['section'];
     $dept = $sql2_data['dept'];
     $c_name = $sql1_data['name'];
+
+    $stud_sql = "SELECT * FROM students WHERE section='$section'";
+    $stud_sql_run = mysqli_query($conn,$stud_sql);
+    $students =  [];
+    while($row = mysqli_fetch_assoc($stud_sql_run)){
+        $students[] = $row;
+
+    }
     if($sql2_data){
         $res=[
             "status"=>200,
@@ -282,6 +290,7 @@ if(isset($_POST['fetch_c_detail'])){
             "section"=>$section,
             "year"=>$year,
             "c_name"=>$c_name,
+            "stud"=>$students,
         ];
         echo json_encode($res);
     }

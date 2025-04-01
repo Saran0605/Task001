@@ -326,7 +326,8 @@ $stud_run = mysqli_query($conn,$stud_query);
         background-color: rgb(78, 184, 230);
         transition: background-color 0.3s ease;
     }
-    #table3 td:hover{
+
+    #table3 td:hover {
         background-color: rgb(78, 184, 230);
 
 
@@ -572,92 +573,92 @@ $stud_run = mysqli_query($conn,$stud_query);
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                                <?php 
+                                                <?php 
                                         $tt_sql = "SELECT * FROM time_table WHERE section='$section' AND dept='$dept' AND section='$section'";
                                         $tt_run = mysqli_query($conn,$tt_sql);
                                         while($row = mysqli_fetch_assoc($tt_run)){
                                         
                                         ?>
-                                                                <tr>
-                                                                    <td><?php echo $row['day']; ?></td>
-                                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour1" class="tt">
-                                                                        <?php
+                                                <tr>
+                                                    <td><?php echo $row['day']; ?></td>
+                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour1" class="tt">
+                                                        <?php
                                                                 if($row['hour1']!=NULL){
                                                                 
                                                 ?>
-                                                                                    <span style="color:green">
-                                                                                        Subject : <?php echo $row['hour1']; ?>
-                                                                                    </span>
-                                                                                    <?php
+                                                        <span style="color:green">
+                                                            Subject : <?php echo $row['hour1']; ?>
+                                                        </span>
+                                                        <?php
                                                 }
                                             ?>
 
 
 
-                                                                                </td>
-                                                                                <td value="<?php echo $row['id']; ?>" data-hour="hour2" class="tt"><?php
+                                                    </td>
+                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour2" class="tt"><?php
                                                 if($row['hour2']!=NULL){
                                                 
                                                 ?>
-                                                                                    <span style="color:green">
-                                                                                        Subject : <?php echo $row['hour2']; ?>
-                                                                                    </span> <?php
+                                                        <span style="color:green">
+                                                            Subject : <?php echo $row['hour2']; ?>
+                                                        </span> <?php
                                                 }
                                                 ?>
-                                                                                </td>
-                                                                                <td value="<?php echo $row['id']; ?>" data-hour="hour3" class="tt"><?php
+                                                    </td>
+                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour3" class="tt"><?php
                                                 if($row['hour3']!=NULL){
                                                 
                                                 ?>
-                                                                                    <span style="color:green">
-                                                                                        Subject : <?php echo $row['hour3']; ?>
-                                                                                    </span> <?php
+                                                        <span style="color:green">
+                                                            Subject : <?php echo $row['hour3']; ?>
+                                                        </span> <?php
                                                 }
                                                 ?>
-                                                                                </td>
-                                                                                <td value="<?php echo $row['id']; ?>" data-hour="hour4" class="tt"><?php
+                                                    </td>
+                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour4" class="tt"><?php
                                                 if($row['hour4']!=NULL){
                                                 
                                                 ?>
-                                                                                    <span style="color:green">
-                                                                                        Subject : <?php echo $row['hour4']; ?>
-                                                                                    </span> <?php
+                                                        <span style="color:green">
+                                                            Subject : <?php echo $row['hour4']; ?>
+                                                        </span> <?php
                                                 }
                                                 ?>
-                                                                                </td>
-                                                                                <td value="<?php echo $row['id']; ?>" data-hour="hour5" class="tt"><?php
+                                                    </td>
+                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour5" class="tt"><?php
                                                 if($row['hour5']!=NULL){
                                                 
                                                 ?>
-                                                                                    <span style="color:green">
-                                                                                        Subject : <?php echo $row['hour5']; ?>
-                                                                                    </span> <?php
+                                                        <span style="color:green">
+                                                            Subject : <?php echo $row['hour5']; ?>
+                                                        </span> <?php
                                                 }
                                                 ?>
-                                                                                </td>
-                                                                                <td value="<?php echo $row['id']; ?>" data-hour="hour6" class="tt"><?php
+                                                    </td>
+                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour6" class="tt"><?php
                                                 if($row['hour6']!=NULL){
                                                 
                                                 ?>
-                                                                                    <span style="color:green">
-                                                                                        Subject : <?php echo $row['hour6']; ?>
-                                                                                    </span> <?php
+                                                        <span style="color:green">
+                                                            Subject : <?php echo $row['hour6']; ?>
+                                                        </span> <?php
                                                 }
                                                 ?>
-                                                                                </td>
-                                                                                <td value="<?php echo $row['id']; ?>" data-hour="hour7" class="tt"><?php
+                                                    </td>
+                                                    <td value="<?php echo $row['id']; ?>" data-hour="hour7" class="tt"><?php
                                                 if($row['hour7']!=NULL){
                                                 
                                                 ?>
-                                                                                    <span style="color:green">
-                                                                                        Subject : <?php echo $row['hour7']; ?>
-                                                                                    </span>
-                                                                                    <?php
+                                                        <span style="color:green">
+                                                            Subject : <?php echo $row['hour7']; ?>
+                                                        </span>
+                                                        <?php
                                                 }
                                                 ?>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <?php
+                                                    </td>
+                                                </tr>
+                                                <?php
                                         }
                                         ?>
 
@@ -678,7 +679,7 @@ $stud_run = mysqli_query($conn,$stud_query);
                             <div class="col-md-12">
                                 <div class="card-header mb-3 " style="text-align: right;">
                                     Date : <h2 id="date"></h2>
-                                   
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -710,7 +711,7 @@ $stud_run = mysqli_query($conn,$stud_query);
 
 
                                             </tbody>
-                                            
+
                                         </table>
                                     </div>
                                 </div>
@@ -720,7 +721,7 @@ $stud_run = mysqli_query($conn,$stud_query);
 
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                    <h2>Subject Wise TimeTable</h2>
+                                        <h2>Subject Wise TimeTable</h2>
 
                                         <table id="table4" class="table table-striped table-bordered">
                                             <thead class="gradient-header">
@@ -749,7 +750,7 @@ $stud_run = mysqli_query($conn,$stud_query);
 
 
                                             </tbody>
-                                            
+
                                         </table>
                                     </div>
                                 </div>
@@ -851,53 +852,53 @@ $stud_run = mysqli_query($conn,$stud_query);
                 </div>
                 <div class="modal-body">
                     <form action="">
-                       Course name  : <span id="c_name"></span><br><br>
-                       Faculty name : <span id="f_name"></span><br><br>
+                        Course name : <span id="c_name"></span><br><br>
+                        Faculty name : <span id="f_name"></span><br><br>
 
-                       <table id="stu_list" class="table table-striped table-bordered">
-                        <thead class="gradient-header">
-                            <th>sno</th>
-                            <th>Reg</th>
-                            <th>Name</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            <?php 
+                        <table id="stu_list" class="table table-striped table-bordered">
+                            <thead class="gradient-header">
+                                <th>sno</th>
+                                <th>Reg</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                <?php 
                             $msql1 = "SELECT * FROM students WHERE section = '$section'";
                             $msql1_run = mysqli_query($conn,$msql1);
                             $g = 1;
                             while($row = mysqli_fetch_array($msql1_run)){
                             ?>
-                            <tr>
-                                <td>
-                                    <?php echo $g++;  ?>
-                                </td>
-                                <td>
-                                    <?php echo $row['reg_no']; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row['name']; ?>
-                                </td>
-                                <td>
-                                    <button>
-                                        present
+                                <tr>
+                                    <td>
+                                        <?php echo $g++;  ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['reg_no']; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['name']; ?>
+                                    </td>
+                                    <td>
+                                        <button>
+                                            present
 
-                                    </button>
-                                    <button>
-                                        absent
-                                    </button>
-                                </td>
-                            </tr>
-                            <?php
+                                        </button>
+                                        <button>
+                                            absent
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php
                             }
                             ?>
-                            
-                        </tbody>
-                       </table>
-                       
+
+                            </tbody>
+                        </table>
+
 
                     </form>
-                   
+
 
                 </div>
                 <div class="modal-footer">
@@ -910,7 +911,7 @@ $stud_run = mysqli_query($conn,$stud_query);
     </div>
 
 
-    
+
     <div class="modal fade" id="tt2_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -923,7 +924,18 @@ $stud_run = mysqli_query($conn,$stud_query);
                     Year: <span id="year1"></span><br><br>
                     Department: <span id="dept1"></span><br><br>
                     Section: <span id="section1"></span><br><br>
-                  
+
+                    <table id="stu_list1" class="table table-striped table-bordered">
+                        <thead class="gradient-header">
+                            <th>Reg</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
 
                 </div>
                 <div class="modal-footer">
@@ -949,10 +961,7 @@ $stud_run = mysqli_query($conn,$stud_query);
     </div>
     <script src="script.js"> </script>
     <script>
-
-
-
-$(document).ready(function() {
+    $(document).ready(function() {
         $('#table1').DataTable();
         $('#table2').DataTable();
 
@@ -1233,17 +1242,17 @@ $(document).ready(function() {
 
     });
 
-    $(document).on("click",".att",function(e){
+    $(document).on("click", ".att", function(e) {
         e.preventDefault();
         $.ajax({
-            type:"POST",
-            url:"backend.php",
-            data:{
-                "get_tt":true,
+            type: "POST",
+            url: "backend.php",
+            data: {
+                "get_tt": true,
             },
-            success:function(response){
+            success: function(response) {
                 var res = jQuery.parseJSON(response);
-                if(res.status==200){
+                if (res.status == 200) {
                     $("#day").text(res.data.day);
                     $("#h1").text(res.data.hour1);
                     $("#h2").text(res.data.hour2);
@@ -1255,7 +1264,7 @@ $(document).ready(function() {
                     $("#date").text(res.date);
 
 
-                    
+
                 }
             }
 
@@ -1263,78 +1272,91 @@ $(document).ready(function() {
     });
 
 
-    $(document).on("click",".hatt",function(e){
+    $(document).on("click", ".hatt", function(e) {
         e.preventDefault();
         var code = $(this).text();
         $.ajax({
-            type:"POST",
-            url:"backend.php",
-            data:{
-                "code":code,
-                "getcdetail":true,
+            type: "POST",
+            url: "backend.php",
+            data: {
+                "code": code,
+                "getcdetail": true,
             },
-            success:function(response){
+            success: function(response) {
                 console.log(response);
                 var res = jQuery.parseJSON(response);
-                if(res.status==200){
+                if (res.status == 200) {
                     $("#c_name").text(res.cname);
                     $("#f_name").text(res.fac_name);
                     $("#hmodal").modal('show');
                 }
-                    
+
             }
         });
     });
 
-    $(document).ready(function(){
+    $(document).ready(function() {
         console.log("done");
         $.ajax({
-            type:"POST",
-            url:"backend.php",
-            data:{
-                "getothertt":true
+            type: "POST",
+            url: "backend.php",
+            data: {
+                "getothertt": true
             },
-            success:function(response){
+            success: function(response) {
                 var res = jQuery.parseJSON(response);
                 $.each(res, function(index, data) {
-                        $("#day2").text(data.day);   
+                    $("#day2").text(data.day);
 
-                        $("#h11").text(data.schedule.hour1 || "-");
-                        $("#h22").text(data.schedule.hour2 || "-");
-                        $("#h33").text(data.schedule.hour3 || "-");
-                        $("#h44").text(data.schedule.hour4 || "-");
-                        $("#h55").text(data.schedule.hour5 || "-");
-                        $("#h66").text(data.schedule.hour6 || "-");
-                        $("#h77").text(data.schedule.hour7 || "-");
-                    });            }
-            
+                    $("#h11").text(data.schedule.hour1 || "-");
+                    $("#h22").text(data.schedule.hour2 || "-");
+                    $("#h33").text(data.schedule.hour3 || "-");
+                    $("#h44").text(data.schedule.hour4 || "-");
+                    $("#h55").text(data.schedule.hour5 || "-");
+                    $("#h66").text(data.schedule.hour6 || "-");
+                    $("#h77").text(data.schedule.hour7 || "-");
+                });
+            }
+
         })
 
 
     });
 
-    $(document).on("click",".hatt1",function(e){
+    $(document).on("click", ".hatt1", function(e) {
         var course = $(this).text();
-        if(course=='-'){
+        if (course == '-') {
             alert("you dont have any class");
         }
         e.preventDefault();
         $.ajax({
-            type:"POST",
-            url:"backend.php",
-            data:{
-                "course1":course,
-                "fetch_c_detail":true,
+            type: "POST",
+            url: "backend.php",
+            data: {
+                "course1": course,
+                "fetch_c_detail": true,
             },
-            success:function(response){
+            success: function(response) {
                 var res = jQuery.parseJSON(response);
-                if(res.status==200){
+                if (res.status == 200) {
+                    console.log(res.stud);
                     $("#c_name1").text(res.c_name);
                     $("#year1").text(res.year);
                     $("#dept1").text(res.dept);
                     $("#section1").text(res.section);
+                    let tbody = $("#stu_list1");
+                    tbody.empty();
+
+                    res.stud.forEach((stud)=>{
+                        let row = `<tr>
+                        <td>${stud.reg_no}</td>
+                        <td>${stud.name}</td>
+                        </tr>`;
+                        tbody.append(row);
+                    });
                     $("#tt2_modal").modal("show");
-                  
+
+
 
                 }
             }
