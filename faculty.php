@@ -740,13 +740,13 @@ $stud_run = mysqli_query($conn,$stud_query);
                                             </thead>
                                             <tbody>
                                                 <td id="day2"></td>
-                                                <td id="h11" class="hatt1"></td>
-                                                <td id="h22" class="hatt1"></td>
-                                                <td id="h33" class="hatt1"></td>
-                                                <td id="h44" class="hatt1"></td>
-                                                <td id="h55" class="hatt1"></td>
-                                                <td id="h66" class="hatt1"></td>
-                                                <td id="h77" class="hatt1"></td>
+                                                <td id="h11" data-value="hour1" class="hatt1"></td>
+                                                <td id="h22" data-value="hour2" class="hatt1"></td>
+                                                <td id="h33" data-value="hour3" class="hatt1"></td>
+                                                <td id="h44" data-value="hour4" class="hatt1"></td>
+                                                <td id="h55" data-value="hour5" class="hatt1"></td>
+                                                <td id="h66" data-value="hour6" class="hatt1"></td>
+                                                <td id="h77" data-value="hour7" class="hatt1"></td>
 
 
                                             </tbody>
@@ -875,10 +875,12 @@ $stud_run = mysqli_query($conn,$stud_query);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Course Name: <span id="c_name1"></span><br><br>
-                    Year: <span id="year1"></span><br><br>
-                    Department: <span id="dept1"></span><br><br>
-                    Section: <span id="section1"></span><br><br>
+                    <form id="sub_att">
+                    Course Name: <span name="c_name1" id="c_name1"></span><br><br>
+                    Year: <span name="year1" id="year1"></span><br><br>
+                    Department: <span name = "dept1" id="dept1"></span><br><br>
+                    Section: <span name="section1" id="section1"></span><br><br>
+                    Hour : <span name="hourinfo" id="hourinfo"></span>
 
                     <table  class="table table-striped table-bordered">
                         <thead class="gradient-header">
@@ -896,6 +898,7 @@ $stud_run = mysqli_query($conn,$stud_query);
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
 
                 </div>
             </div>
@@ -1280,6 +1283,9 @@ $stud_run = mysqli_query($conn,$stud_query);
 
     $(document).on("click", ".hatt1", function(e) {
     var course = $(this).text();
+    var hour = $(this).attr("data-value");
+    console.log(course);
+    console.log(hour);
     if (course == '-') {
         alert("You don't have any class");
     }
@@ -1299,6 +1305,7 @@ $stud_run = mysqli_query($conn,$stud_query);
                 $("#year1").text(res.year);
                 $("#dept1").text(res.dept);
                 $("#section1").text(res.section);
+                $("#hourinfo").text(hour);
                 let tbody = $("#stu_list1");
                 tbody.empty();
 
@@ -1319,6 +1326,64 @@ $stud_run = mysqli_query($conn,$stud_query);
         }
     });
 });
+
+$(document).on("submit", "#sub_att", function(e) {
+    e.preventDefault();
+    
+    var form = new FormData(this);
+    var day = $("#day2").text().trim();
+    var date = $("#date").text().trim();
+    var year = $("#year1").text().trim();
+    var dept = $("#dept1").text().trim();
+    var section = $("#section1").text().trim();
+    var hour = $("#hourinfo").text().trim();
+    
+    let students = [];
+
+    $("#stu_list1 tr").each(function() {
+        let reg = $(this).find("td:nth-child(1)").text().trim(); // Get Reg No
+        let name = $(this).find("td:nth-child(2)").text().trim(); // Get Name
+        let status = $(this).find("input[type='radio']:checked").val(); // Handle empty selection
+
+        if (status) {
+            students.push({
+                reg_no: reg,
+                name: name,
+                status: status
+            });
+        }
+    });
+
+    form.append("att_day", day);
+    form.append("att_date", date);
+    form.append("year1", year);
+    form.append("dept1", dept);
+    form.append("section1", section);
+    form.append("hourinfo", hour);
+    form.append("students", JSON.stringify(students));
+    form.append("putatt", true);
+
+
+    $.ajax({
+        type: "POST",
+        url: "backend.php",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            var res = jQuery.parseJSON(response);
+            if (res.status == 200) {
+                alert(`Attendance entered successfully for ${day}`);
+                $("#tt2_modal").modal("hide");
+
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+});
+
 
     </script>
 

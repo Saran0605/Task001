@@ -299,4 +299,30 @@ if(isset($_POST['fetch_c_detail'])){
 }
 
 
+if(isset($_POST['putatt'])){
+    $day = $_POST["att_day"];
+    $date = $_POST["att_date"];
+    $students = json_decode($_POST["students"], true);
+    $year = $_POST['year1'];
+    $dept = $_POST['dept1'];
+    $section = $_POST['section1'];
+    $hour = $_POST['hourinfo'];
+    
+
+
+    if (!empty($students)) {
+        foreach ($students as $student) {
+            $reg_no = $student["reg_no"];
+            $name = $student["name"];
+            $status = $student["status"];
+
+            $query = "INSERT INTO attendance (year,dept,section,reg_no,name,type,date,day,hour) VALUES ('$year','$dept','$section','$reg_no','$name','$status','$date','$day','$hour')";
+            $query_run = mysqli_query($conn,$query);
+            
+        }
+    }
+
+    echo json_encode(["status" => 200, "message" => "Attendance recorded successfully!"]);
+}
+
 ?>
