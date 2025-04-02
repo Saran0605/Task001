@@ -854,52 +854,7 @@ $stud_run = mysqli_query($conn,$stud_query);
                     <form action="">
                         Course name : <span id="c_name"></span><br><br>
                         Faculty name : <span id="f_name"></span><br><br>
-
-                        <table id="stu_list" class="table table-striped table-bordered">
-                            <thead class="gradient-header">
-                                <th>sno</th>
-                                <th>Reg</th>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
-                                <?php 
-                            $msql1 = "SELECT * FROM students WHERE section = '$section'";
-                            $msql1_run = mysqli_query($conn,$msql1);
-                            $g = 1;
-                            while($row = mysqli_fetch_array($msql1_run)){
-                            ?>
-                                <tr>
-                                    <td>
-                                        <?php echo $g++;  ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['reg_no']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['name']; ?>
-                                    </td>
-                                    <td>
-                                        <button>
-                                            present
-
-                                        </button>
-                                        <button>
-                                            absent
-                                        </button>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-
-                            </tbody>
-                        </table>
-
-
                     </form>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -925,13 +880,13 @@ $stud_run = mysqli_query($conn,$stud_query);
                     Department: <span id="dept1"></span><br><br>
                     Section: <span id="section1"></span><br><br>
 
-                    <table id="stu_list1" class="table table-striped table-bordered">
+                    <table  class="table table-striped table-bordered">
                         <thead class="gradient-header">
                             <th>Reg</th>
                             <th>Name</th>
                             <th>Action</th>
                         </thead>
-                        <tbody>
+                        <tbody id="stu_list1">
 
                         </tbody>
                     </table>
@@ -1324,45 +1279,47 @@ $stud_run = mysqli_query($conn,$stud_query);
     });
 
     $(document).on("click", ".hatt1", function(e) {
-        var course = $(this).text();
-        if (course == '-') {
-            alert("you dont have any class");
-        }
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: "backend.php",
-            data: {
-                "course1": course,
-                "fetch_c_detail": true,
-            },
-            success: function(response) {
-                var res = jQuery.parseJSON(response);
-                if (res.status == 200) {
-                    console.log(res.stud);
-                    $("#c_name1").text(res.c_name);
-                    $("#year1").text(res.year);
-                    $("#dept1").text(res.dept);
-                    $("#section1").text(res.section);
-                    let tbody = $("#stu_list1");
-                    tbody.empty();
+    var course = $(this).text();
+    if (course == '-') {
+        alert("You don't have any class");
+    }
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "backend.php",
+        data: {
+            "course1": course,
+            "fetch_c_detail": true,
+        },
+        success: function(response) {
+            var res = jQuery.parseJSON(response);
+            if (res.status == 200) {
+                console.log(res.stud);
+                $("#c_name1").text(res.c_name);
+                $("#year1").text(res.year);
+                $("#dept1").text(res.dept);
+                $("#section1").text(res.section);
+                let tbody = $("#stu_list1");
+                tbody.empty();
 
-                    res.stud.forEach((stud)=>{
-                        let row = `<tr>
+                res.stud.forEach((stud) => {
+                    let row = `<tr>
                         <td>${stud.reg_no}</td>
                         <td>${stud.name}</td>
-                        </tr>`;
-                        tbody.append(row);
-                    });
-                    $("#tt2_modal").modal("show");
-
-
-
-                }
+                        <td>
+                            <input type="radio" name="status_${stud.reg_no}" value="OD"> OD 
+                            &nbsp;
+                            <input type="radio" name="status_${stud.reg_no}" value="Leave"> Leave
+                        </td>
+                    </tr>`;
+                    tbody.append(row);
+                });
+                $("#tt2_modal").modal("show");
             }
-        })
-
+        }
     });
+});
+
     </script>
 
 </body>
